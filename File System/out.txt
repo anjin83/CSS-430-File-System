@@ -1,0 +1,82 @@
+threadOS ver 1.0:
+Type ? for help
+threadOS: a new thread (thread=Thread[Thread-3,2,main] tid=0 pid=-1)
+-->l Test5
+threadOS: a new thread (thread=Thread[Thread-5,2,main] tid=1 pid=0)
+1: format( 48 )...................
+SysLib.rawread: blkNumber=16Kernel.interrupt RAWREAD: param=16
+SysLib.rawwrite: blkNumber=16Kernel.interrupt RAWWRITE: param=16successfully completed
+Correct behavior of format......................2
+2: fd = open( "css430", "w+" )....successfully completed
+Correct behavior of open........................2
+3: size = write( fd, buf[16] )....
+FileSystem.write: about to rawwrite blockNumber=4successfully completed
+Correct behavior of writing a few bytes.........2
+4: close( fd )....................successfully completed
+Correct behavior of close.......................2
+5: reopen and read from "css430"..Second cread in readsuccessfully completed
+Correct behavior of reading a few bytes.........2
+6: append buf[32] to "css430".....Second cread in write
+FileSystem.write: about to rawwrite blockNumber=4Second cread in readsuccessfully completed
+Correct behavior of appending a few bytes.......1
+7: seek and read from "css430"....Second cread in readSecond cread in readSecond cread in readsuccessfully completed
+Correct behavior of seeking in a small file.....1
+8: open "css430" with w+..........Second cread in write
+FileSystem.write: about to rawwrite blockNumber=4Second cread in readsuccessfully completed
+Correct behavior of read/writing a small file.0.5
+9: fd = open( "bothell", "w" )....successfully completed
+10: size = write( fd, buf[6656] ).
+About to cread in changeSize
+Just cread in changeSize
+
+SysLib.rawread: blkNumber=16Kernel.interrupt RAWREAD: param=16First cread in write
+About to write to block 6
+Wrote to block 6
+About to write to block 7
+Wrote to block 7
+About to write to block 8
+Wrote to block 8
+About to write to block 9
+Wrote to block 9
+About to write to block 10
+Wrote to block 10
+About to write to block 11
+Wrote to block 11
+About to write to block 12
+Wrote to block 12
+About to write to block 13
+Wrote to block 13
+About to write to block 14
+Wrote to block 14
+About to write to block 15
+Wrote to block 15
+About to write to block 16
+SysLib.rawwrite: blkNumber=16Kernel.interrupt RAWWRITE: param=16
+Wrote to block 16
+About to write to block 0
+Wrote to block 0
+FileSystem.write: about to rawwrite blockNumber=6successfully completed
+Correct behavior of writing a lot of bytes....0.5
+11: close( fd )....................successfully completed
+12: reopen and read from "bothell"First cread in readSecond cread in read
+SysLib.rawread: blkNumber=16Kernel.interrupt RAWREAD: param=16successfully completed
+Correct behavior of reading a lot of bytes....0.5
+13: append buf[32] to "bothell"...
+About to cread in changeSize
+Just cread in changeSize
+First cread in write
+FileSystem.write: about to rawwrite blockNumber=1029
+SysLib.rawwrite: blkNumber=1029Kernel.interrupt RAWWRITE: param=1029
+threadOS: a wrong blockId for write: blockId=1029, diskSize=1000Exception in thread "Thread-5" java.lang.IllegalArgumentException
+	at Disk.write(Disk.java:66)
+	at Kernel.interrupt(Kernel.java:131)
+	at SysLib.rawwrite(SysLib.java:117)
+	at FileSystem.write(FileSystem.java:207)
+	at Kernel.interrupt(Kernel.java:186)
+	at SysLib.write(SysLib.java:36)
+	at Test5.test13(Test5.java:349)
+	at Test5.run(Test5.java:44)
+	at java.lang.Thread.run(Thread.java:748)
+Exception in thread "Thread-0" java.lang.IllegalThreadStateException
+	at java.lang.Thread.start(Thread.java:708)
+	at Scheduler.run(Scheduler.java:168)
